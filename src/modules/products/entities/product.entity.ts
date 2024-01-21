@@ -12,7 +12,7 @@ export class Product extends Document {
   @Prop({ type: 'String', required: true })
   description: string;
 
-  @Prop({ type: 'Number', requited: true, index: true })
+  @Prop({ type: 'Number', required: true, index: true })
   price: number;
 
   @Prop({ type: 'Number', required: true })
@@ -21,8 +21,9 @@ export class Product extends Document {
   @Prop({ type: 'String', required: true })
   image: string;
 
-  @Prop({ type: CategorySchema })
-  category: Category;
+  @Prop({ type:Types.ObjectId, ref: Category.name, required: true })
+  category: Types.ObjectId;
+
 
   @Prop({ type: Types.ObjectId, ref: Brand.name, required: true })
   brand: Brand | Types.ObjectId;

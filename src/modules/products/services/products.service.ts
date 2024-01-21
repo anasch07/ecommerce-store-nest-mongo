@@ -35,6 +35,20 @@ export class ProductsService {
     return { total, products };
   }
 
+
+  async findManyByCategory(id: string) {
+    const products = await this.productModel
+      .find({category: id})
+      .populate('brand')
+      .exec();
+
+    if (!products)
+      throw new NotFoundException(`Products with category id ${id} not found`);
+
+    return products;
+  }
+
+
   async findById(id: string) {
     const product = await this.productModel
       .findById(id)

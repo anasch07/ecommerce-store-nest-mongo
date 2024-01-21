@@ -12,17 +12,17 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UseGuards } from '@nestjs/common';
+import { IsMongoIdPipe } from 'src/common';
+import { JwtAuthGuard, RolesGuard } from 'src/auth/guards';
+import { Public, Roles } from 'src/auth/decorators';
+import { Role } from 'src/auth/models';
 
+import { ProductsService } from '../services/products.service';
 import {
   CreateProductDto,
   FilterProductstDto,
   UpdateProductDto,
 } from '../dtos/products.dto';
-import { IsMongoIdPipe } from 'src/common';
-import { JwtAuthGuard, RolesGuard } from 'src/auth/guards';
-import { ProductsService } from '../services/products.service';
-import { Public, Roles } from 'src/auth/decorators';
-import { Role } from 'src/auth/models';
 
 @ApiTags('Products')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -36,6 +36,16 @@ export class ProductsController {
   async findMany(@Query() params: FilterProductstDto) {
     return await this.productsService.findMany(params);
   }
+
+
+  //find products by category id
+  @Public()
+  @ApiOperation({ summary: 'List of products by category id' })
+  @Get('category/:id')
+  async findManyByCategory(@Param('id', IsMongoIdPipe) id: string) {
+    return await this.productsService.findManyByCategory(id);
+  }
+
 
   @Public()
   @Get(':id')

@@ -13,6 +13,7 @@ import {
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 
 import { Category } from '../entities/category.entity';
+
 import { CreateCategoryDto } from './categories.dto';
 
 export class CreateProductDto {
@@ -43,10 +44,11 @@ export class CreateProductDto {
   @ApiProperty({ description: 'Product stock' })
   readonly image: string;
 
+  @IsMongoId()
   @IsNotEmpty()
-  @ApiProperty({ description: 'Product category', type: Category })
-  @ValidateNested()
-  readonly category: CreateCategoryDto;
+  @ApiProperty({ description: 'Category ID' })
+  readonly category: string;
+
 
   @IsMongoId()
   @IsNotEmpty()
