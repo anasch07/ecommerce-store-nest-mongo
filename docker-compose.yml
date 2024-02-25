@@ -1,9 +1,10 @@
-version: '3.3'
-
 services:
-  mongo:
-    image: mongo:4.4
+  react:
+    build: .
+    container_name: backend-ecommerce-compose
     ports:
-      - 27017:27017
+      - "4000:3000"
+    command: npm run start:dev
     volumes:
-      - ./mongo_data:/data/db
+      - "./:/app"
+      - /app/node_modules
